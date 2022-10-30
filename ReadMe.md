@@ -1,1 +1,2 @@
-# 山姆抢购工具 使用指南
+# sams-market-helper
+Sam's 抢购小助手
