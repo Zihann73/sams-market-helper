@@ -1,2 +1,7 @@
 # sams-market-helper
-Sam's 抢购小助手
+
+
+Simple Script of Sam's shopping process, including:
+- add products to shopping bag
+- create order
+- submit order
