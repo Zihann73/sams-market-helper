@@ -47,8 +47,8 @@ jobs:
               --url 'https://api.wooah.cn/api/Studio'`
           echo $CODE
           if [ $CODE != "200" ]
-          then echo "status=UP" >> $GITHUB_ENV
-          else echo "status=DOWN" >> $GITHUB_ENV
+          then echo "status=DOWN" >> $GITHUB_ENV
+          else echo "status=UP" >> $GITHUB_ENV
           fi
       - name: show env
         if: ${{ env.status }} == "DOWN"
