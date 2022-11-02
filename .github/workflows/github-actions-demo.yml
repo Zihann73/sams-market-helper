@@ -59,7 +59,7 @@ jobs:
 #          exit 1
       - name: exit check
         if: ${{ env.test }} == "DOWN"
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6.3.3
         with:
           script: |
             core.setFailed('service is down!')
