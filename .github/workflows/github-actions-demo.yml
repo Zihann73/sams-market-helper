@@ -49,14 +49,14 @@ jobs:
           fi
       - name: show env
         run: |
-          echo $SERVER_STATUS
+          echo ${{ SERVER_STATUS }}
       - name: show inputs
         run: |
           echo "region=${{ inputs.region }} stage=${{ inputs.stage }} service=${{ inputs.service }}"
       - name: Try to fail
-        if: $SERVER_STATUS == "200"
+        if: ${{ SERVER_STATUS }} == "200"
         run: |
-          echo $SERVER_STATUS
+          echo ${{ SERVER_STATUS }}
           exit 1
 #      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
 #      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
