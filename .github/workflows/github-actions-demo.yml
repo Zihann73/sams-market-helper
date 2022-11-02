@@ -51,13 +51,10 @@ jobs:
   deploy-global:
     if: ${{ inputs.region=='global' }}
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.one.outputs.test }}
     steps:
 #      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." -o result.json
       - name: ssh deploy production
         if: ${{ inputs.service=='api' && inputs.stage=='production'}}
-        id: one
         run: |
           CODE=`curl --write-out '%{http_code}' \
               --silent \
@@ -72,7 +69,6 @@ jobs:
           fi
       - name: ssh deploy staging
         if: ${{ inputs.service=='api' && inputs.stage=='staging'}}
-        id: one
         run: |
           CODE=`curl --write-out '%{http_code}' \
               --silent \
@@ -97,13 +93,9 @@ jobs:
   deploy-cn:
     if: ${{ inputs.region=='global' }}
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.one.outputs.test }}
     steps:
-      #      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." -o result.json
       - name: ssh deploy production
         if: ${{ inputs.service=='api' && inputs.stage=='production'}}
-        id: one
         run: |
           CODE=`curl --write-out '%{http_code}' \
            --silent \
@@ -118,7 +110,6 @@ jobs:
           fi
       - name: ssh deploy staging
         if: ${{ inputs.service=='api' && inputs.stage=='staging'}}
-        id: one
         run: |
           CODE=`curl --write-out '%{http_code}' \
               --silent \
