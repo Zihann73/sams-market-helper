@@ -47,14 +47,16 @@ jobs:
               --url 'https://jsonplaceholder.typicode.com/todos/1'`
           echo $CODE
           if [ $CODE != "200" ]
-          then echo "test=DOWN" >> $GITHUB_OUTPUT
-          else echo "test=UP" >> $GITHUB_OUTPUT
+          then echo "test=DOWN" >> $GITHUB_ENV
+          else echo "test=UP" >> $GITHUB_ENV
           fi
+        env:
+          var0: ${{ env.test }}
       - name: show env
         run: |
-          export FOO=bar
-          echo "::set-env name=FOO::$FOO"
-      - run: echo $FOO
+          echo ${{ env.var0 }}
+
+#      - run: echo $FOO
 #      - name: Try to fail
 #        if: ${{ outputs.output1 }} == "200"
 #        run: |
