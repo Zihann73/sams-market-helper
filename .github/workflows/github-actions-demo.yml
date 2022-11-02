@@ -50,11 +50,11 @@ jobs:
           then echo "test=DOWN" >> $GITHUB_ENV
           else echo "test=UP" >> $GITHUB_ENV
           fi
-        env:
-          var0: ${{ env.test }}
+#        env:
+#          var0: ${{ env.test }}
       - name: show env
         run: |
-          echo ${{ env.var0 }}
+          echo ${{ env.test }}
 
 #      - run: echo $FOO
 #      - name: Try to fail
