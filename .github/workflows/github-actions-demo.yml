@@ -109,5 +109,5 @@ jobs:
       - name: exit check
         if: env.status == 'DOWN'
         run: |
-          echo "::error service unavailable"
+          echo "::error file={name},line={line},endLine={endLine},title={title}::{message}"
           exit 1
