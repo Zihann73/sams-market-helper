@@ -49,12 +49,11 @@ on:
 
 jobs:
   deploy-global:
-    if: ${{ inputs.region=='global' }}
+    if: inputs.region=='global'
     runs-on: ubuntu-latest
     steps:
-#      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." -o result.json
       - name: ssh deploy production
-        if: ${{ inputs.service=='api' && inputs.stage=='production'}}
+        if: inputs.service=='api' && inputs.stage=='production'
         run: |
           CODE=`curl --write-out '%{http_code}' \
               --silent \
@@ -68,7 +67,7 @@ jobs:
           else echo "status=DOWN" >> $GITHUB_ENV
           fi
       - name: ssh deploy staging
-        if: ${{ inputs.service=='api' && inputs.stage=='staging'}}
+        if: inputs.service=='api' && inputs.stage=='staging'
         run: |
           CODE=`curl --write-out '%{http_code}' \
               --silent \
@@ -91,11 +90,11 @@ jobs:
           echo "::error title=msg::'service unavailable'"
           exit 1
   deploy-cn:
-    if: ${{ inputs.region=='global' }}
+    if: inputs.region=='cn'
     runs-on: ubuntu-latest
     steps:
       - name: ssh deploy production
-        if: ${{ inputs.service=='api' && inputs.stage=='production'}}
+        if: inputs.service=='api' && inputs.stage=='production'
         run: |
           CODE=`curl --write-out '%{http_code}' \
            --silent \
@@ -109,7 +108,7 @@ jobs:
           else echo "status=DOWN" >> $GITHUB_ENV
           fi
       - name: ssh deploy staging
-        if: ${{ inputs.service=='api' && inputs.stage=='staging'}}
+        if: inputs.service=='api' && inputs.stage=='staging'
         run: |
           CODE=`curl --write-out '%{http_code}' \
               --silent \
