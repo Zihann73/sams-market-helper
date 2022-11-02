@@ -55,7 +55,7 @@ jobs:
         run: |
           echo ${{ env.status }}
       - name: exit check
-        if: ${{ env.status }} == "DOWN"
+        if: ${{ env.status }} == DOWN
         run: |
           echo "::error ${{ env.status }}"
           exit 1
