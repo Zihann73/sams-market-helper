@@ -53,8 +53,11 @@ jobs:
 #        env:
 #          var0: ${{ env.test }}
       - name: show env
+
+        if: ${{ env.test }} == "UP"
         run: |
           echo ${{ env.test }}
+          exit 1
 
 #      - run: echo $FOO
 #      - name: Try to fail
