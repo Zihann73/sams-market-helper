@@ -32,9 +32,12 @@ on:
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.one.outputs.test }}
     steps:
 #      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." -o result.json
       - name: http request
+        id: one
         run: |
           CODE=`curl --write-out '%{http_code}' \
               --silent \
@@ -44,19 +47,15 @@ jobs:
               --url 'https://jsonplaceholder.typicode.com/todos/1'`
           echo $CODE
           if [ $CODE != "200" ]
-          then echo "DOWN" >> $SERVER_STATUS
-          else echo "UP" >> $SERVER_STATUS
+          then echo "test=DOWN" >> $GITHUB_OUTPUT
+          else echo "test=UP" >> $GITHUB_OUTPUT
           fi
       - name: show env
         run: |
-          echo ${{ SERVER_STATUS }}
-      - name: show inputs
-        run: |
-          echo "region=${{ inputs.region }} stage=${{ inputs.stage }} service=${{ inputs.service }}"
+          echo ${{ outputs.output1 }}
       - name: Try to fail
-        if: ${{ SERVER_STATUS }} == "200"
+        if: ${{ outputs.output1 }} == "200"
         run: |
-          echo ${{ SERVER_STATUS }}
           exit 1
 #      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
 #      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
