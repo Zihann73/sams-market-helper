@@ -9,24 +9,24 @@ on:
       region:
         required: true
         type: string
+        default: cn
         description: deploy region
       stage:
         required: true
         type: string
+        default: staging
         description: deploy stage
       service:
         required: true
         type: string
         default: api
         description: deploy service
-    secrets:
-      API_DEPLOY_SSH_KEY:
-        required: true
   workflow_dispatch:
     inputs:
       region:
         required: true
         type: choice
+        default: global
         description: deploy region
         options:
           - cn
@@ -34,6 +34,7 @@ on:
       stage:
         required: true
         type: choice
+        default: staging
         description: deploy stage
         options:
           - staging
@@ -108,5 +109,5 @@ jobs:
       - name: exit check
         if: env.status == 'DOWN'
         run: |
-          echo "::error title=msg::'service unavailable'"
+          echo "::error service unavailable"
           exit 1
