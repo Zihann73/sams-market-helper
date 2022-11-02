@@ -44,37 +44,19 @@ jobs:
               --output /dev/null \
               --request GET \
               --header 'accept: */*' \
-              --url 'https://jsonplaceholder.typicode.com/todos/1'`
+              --url 'https://api.wooah.cn/api/Studio'`
           echo $CODE
           if [ $CODE != "200" ]
-          then echo "test=UP" >> $GITHUB_ENV
-          else echo "test=DOWN" >> $GITHUB_ENV
+          then echo "status=UP" >> $GITHUB_ENV
+          else echo "status=DOWN" >> $GITHUB_ENV
           fi
-#        env:
-#          var0: ${{ env.test }}
       - name: show env
-        if: ${{ env.test }} == "DOWN"
+        if: ${{ env.status }} == "DOWN"
         run: |
-          echo ${{ env.test }}
-#          exit 1
+          echo ${{ env.status }}
       - name: exit check
-        if: ${{ env.test }} == "DOWN"
-#        uses: actions/github-script@v6.3.3
+        if: ${{ env.status }} == "DOWN"
+        uses: actions/github-script@v6.3.3
         with:
           script: |
-            core.setFailed('service is down!')
-#      - run: echo $FOO
-#      - name: Try to fail
-#        if: ${{ outputs.output1 }} == "200"
-#        run: |
-#          exit 1
-#      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-#      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-#      - name: Check out repository code
-#        uses: actions/checkout@v3
-#      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-#      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-#      - name: List files in the repository
-#        run: |
-#          ls ${{ github.workspace }}
-#      - run: echo "🍏 This job's status is ${{ job.status }}."
+            core.setFailed('Service unavailable!')
