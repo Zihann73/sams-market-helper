@@ -1,5 +1,8 @@
 import api.Api;
 
+/**
+ * ApplicationTest.
+ */
 public class ApplicationTest {
     public static void main(String[] args) {
         if (Api.context.containsKey("end")) {
