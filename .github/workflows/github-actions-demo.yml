@@ -56,7 +56,12 @@ jobs:
           echo ${{ env.status }}
       - name: exit check
         if: ${{ env.status }} == "DOWN"
-        uses: actions/github-script@v6.3.3
-        with:
-          script: |
-            core.setFailed('Service unavailable!')
+        run: |
+          echo "::error ${{ env.status }}"
+          exit 1
+#      - name: exit check
+#        if: ${{ env.status }} == "DOWN"
+#        uses: actions/github-script@v6.3.3
+#        with:
+#          script: |
+#            core.setFailed('Service unavailable!')
