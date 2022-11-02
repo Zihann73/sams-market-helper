@@ -51,11 +51,11 @@ jobs:
           else echo "status=UP" >> $GITHUB_ENV
           fi
       - name: show env
-        if: ${{ env.status }} == <font color="#FF0000">'</font>DOWN<font color="#FF0000">' <font color="#000000">
+        if: ${{ env.status }}=='DOWN'
         run: |
           echo ${{ env.status }}
       - name: exit check
-        if: ${{ env.status }} == <font color="#FF0000">'</font>DOWN<font color="#FF0000">' <font color="#000000">
+        if: ${{ env.status }}=='DOWN'
         run: |
           echo "::error ${{ env.status }}"
           exit 1
