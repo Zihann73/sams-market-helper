@@ -55,30 +55,20 @@ jobs:
       - name: ssh deploy production
         if: inputs.service=='api' && inputs.stage=='production'
         run: |
-          CODE=`curl --write-out '%{http_code}' \
-              --silent \
-              --output /dev/null \
-              --request GET \
-              --header 'accept: */*' \
-              --url 'https://api.d1.run/api/Studio'`
+          CODE=`curl -I 'https://api.d1.run/api/Studio' 2>/dev/null | head -n 1 | cut -d$' ' -f2`
           echo $CODE
           if [ $CODE != "200" ]
-          then echo "status=UP" >> $GITHUB_ENV
-          else echo "status=DOWN" >> $GITHUB_ENV
+          then echo "status=DOWN" >> $GITHUB_ENV
+          else echo "status=UP" >> $GITHUB_ENV
           fi
       - name: ssh deploy staging
         if: inputs.service=='api' && inputs.stage=='staging'
         run: |
-          CODE=`curl --write-out '%{http_code}' \
-              --silent \
-              --output /dev/null \
-              --request GET \
-              --header 'accept: */*' \
-              --url 'https://stgapi.d1.run/api/Studio'`
+          CODE=`curl -I 'https://stgapi.d1.run/api/Studio' 2>/dev/null | head -n 1 | cut -d$' ' -f2`
           echo $CODE
           if [ $CODE != "200" ]
-          then echo "status=UP" >> $GITHUB_ENV
-          else echo "status=DOWN" >> $GITHUB_ENV
+          then echo "status=DOWN" >> $GITHUB_ENV
+          else echo "status=UP" >> $GITHUB_ENV
           fi
       - name: show env
         if: env.status == 'DOWN'
@@ -96,30 +86,20 @@ jobs:
       - name: ssh deploy production
         if: inputs.service=='api' && inputs.stage=='production'
         run: |
-          CODE=`curl --write-out '%{http_code}' \
-           --silent \
-           --output /dev/null \
-           --request GET \
-           --header 'accept: */*' \
-           --url 'https://api.wooah.cn/api/Studio'`
+          CODE=`curl -I 'https://api.wooah.cn/api/Studio' 2>/dev/null | head -n 1 | cut -d$' ' -f2`
           echo $CODE
           if [ $CODE != "200" ]
-          then echo "status=UP" >> $GITHUB_ENV
-          else echo "status=DOWN" >> $GITHUB_ENV
+          then echo "status=DOWN" >> $GITHUB_ENV
+          else echo "status=UP" >> $GITHUB_ENV
           fi
       - name: ssh deploy staging
         if: inputs.service=='api' && inputs.stage=='staging'
         run: |
-          CODE=`curl --write-out '%{http_code}' \
-              --silent \
-              --output /dev/null \
-              --request GET \
-              --header 'accept: */*' \
-              --url 'https://stgapi.wooah.cn/api/Studio'`
+          CODE=`curl -I 'https://stgapi.wooah.cn/api/Studio' 2>/dev/null | head -n 1 | cut -d$' ' -f2`
           echo $CODE
           if [ $CODE != "200" ]
-          then echo "status=UP" >> $GITHUB_ENV
-          else echo "status=DOWN" >> $GITHUB_ENV
+          then echo "status=DOWN" >> $GITHUB_ENV
+          else echo "status=UP" >> $GITHUB_ENV
           fi
       - name: show env
         if: env.status == 'DOWN'
