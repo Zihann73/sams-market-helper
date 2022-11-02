@@ -4,6 +4,24 @@ on:
   push:
     branches:
       - main
+  workflow_call:
+    inputs:
+      region:
+        required: true
+        type: string
+        description: deploy region
+      stage:
+        required: true
+        type: string
+        description: deploy stage
+      service:
+        required: true
+        type: string
+        default: api
+        description: deploy service
+    secrets:
+      API_DEPLOY_SSH_KEY:
+        required: true
   workflow_dispatch:
     inputs:
       region:
@@ -30,13 +48,15 @@ on:
           - document
 
 jobs:
-  Explore-GitHub-Actions:
+  deploy-global:
+    if: ${{ inputs.region=='global' }}
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.one.outputs.test }}
     steps:
 #      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." -o result.json
-      - name: http request
+      - name: ssh deploy production
+        if: ${{ inputs.service=='api' && inputs.stage=='production'}}
         id: one
         run: |
           CODE=`curl --write-out '%{http_code}' \
@@ -44,7 +64,22 @@ jobs:
               --output /dev/null \
               --request GET \
               --header 'accept: */*' \
-              --url 'https://api.wooah.cn/api/Studio'`
+              --url 'https://api.d1.run/api/Studio'`
+          echo $CODE
+          if [ $CODE != "200" ]
+          then echo "status=UP" >> $GITHUB_ENV
+          else echo "status=DOWN" >> $GITHUB_ENV
+          fi
+      - name: ssh deploy staging
+        if: ${{ inputs.service=='api' && inputs.stage=='staging'}}
+        id: one
+        run: |
+          CODE=`curl --write-out '%{http_code}' \
+              --silent \
+              --output /dev/null \
+              --request GET \
+              --header 'accept: */*' \
+              --url 'https://stgapi.d1.run/api/Studio'`
           echo $CODE
           if [ $CODE != "200" ]
           then echo "status=UP" >> $GITHUB_ENV
@@ -57,11 +92,51 @@ jobs:
       - name: exit check
         if: env.status == 'DOWN'
         run: |
-          echo "::error title=service::'service unavailable'"
+          echo "::error title=msg::'service unavailable'"
           exit 1
-#      - name: exit check
-#        if: ${{ env.status }} == "DOWN"
-#        uses: actions/github-script@v6.3.3
-#        with:
-#          script: |
-#            core.setFailed('Service unavailable!')
+  deploy-cn:
+    if: ${{ inputs.region=='global' }}
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.one.outputs.test }}
+    steps:
+      #      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." -o result.json
+      - name: ssh deploy production
+        if: ${{ inputs.service=='api' && inputs.stage=='production'}}
+        id: one
+        run: |
+          CODE=`curl --write-out '%{http_code}' \
+           --silent \
+           --output /dev/null \
+           --request GET \
+           --header 'accept: */*' \
+           --url 'https://api.wooah.cn/api/Studio'`
+          echo $CODE
+          if [ $CODE != "200" ]
+          then echo "status=UP" >> $GITHUB_ENV
+          else echo "status=DOWN" >> $GITHUB_ENV
+          fi
+      - name: ssh deploy staging
+        if: ${{ inputs.service=='api' && inputs.stage=='staging'}}
+        id: one
+        run: |
+          CODE=`curl --write-out '%{http_code}' \
+              --silent \
+              --output /dev/null \
+              --request GET \
+              --header 'accept: */*' \
+              --url 'https://stgapi.wooah.cn/api/Studio'`
+          echo $CODE
+          if [ $CODE != "200" ]
+          then echo "status=UP" >> $GITHUB_ENV
+          else echo "status=DOWN" >> $GITHUB_ENV
+          fi
+      - name: show env
+        if: env.status == 'DOWN'
+        run: |
+          echo ${{ env.status }}
+      - name: exit check
+        if: env.status == 'DOWN'
+        run: |
+          echo "::error title=msg::'service unavailable'"
+          exit 1
