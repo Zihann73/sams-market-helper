@@ -30,7 +30,20 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-#      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+#      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event." -o result.json
+      - name: http request
+        run: |
+          CODE=`curl --write-out '%{http_code}' \
+              --silent \
+              --output /dev/null \
+              --request GET \
+              --header 'accept: */*' \
+              --url 'https://jsonplaceholder.typicode.com/todos/1'`
+          echo $CODE
+          if [ $CODE!="200" ]
+          then echo "FAILURE"
+          else echo "SUCCESS"
+          fi
       - name: show inputs
         run: echo "region=${{ inputs.region }} stage=${{ inputs.stage }} service=${{ inputs.service }}"
 #      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
