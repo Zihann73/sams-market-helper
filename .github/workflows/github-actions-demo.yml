@@ -43,12 +43,14 @@ jobs:
               --header 'accept: */*' \
               --url 'https://jsonplaceholder.typicode.com/todos/1'`
           echo $CODE
-          if [ $CODE!="200" ]
+          if [ $CODE != "200" ]
           then echo "FAILURE"
           else echo "SUCCESS"
           fi
       - name: show inputs
         run: echo "region=${{ inputs.region }} stage=${{ inputs.stage }} service=${{ inputs.service }}"
+      - name: Try to fail
+        run: exit 1
 #      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
 #      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 #      - name: Check out repository code
