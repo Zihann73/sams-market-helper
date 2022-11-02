@@ -26,7 +26,7 @@ on:
       region:
         required: true
         type: choice
-        default: global
+        default: cn
         description: deploy region
         options:
           - cn
@@ -109,5 +109,5 @@ jobs:
       - name: exit check
         if: env.status == 'DOWN'
         run: |
-          echo "::error file={name},line={line},endLine={endLine},title={title}::{message}"
+          echo "::error title={title}::service unavailable"
           exit 1
