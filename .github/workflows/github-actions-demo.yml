@@ -57,7 +57,7 @@ jobs:
         if: inputs.service=='api' && inputs.stage=='production'
         run: |
           echo ${PWD}
-          sh status-check.sh
+          sh status-check.sh global production
       - name: ssh deploy staging
         if: inputs.service=='api' && inputs.stage=='staging'
         run: |
