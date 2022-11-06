@@ -58,8 +58,6 @@ jobs:
       - name: ssh deploy production
         if: inputs.service=='api' && inputs.stage=='production'
         run: |
-          echo ${PWD}
-          chmod +x status-check.sh
           sh status-check.sh global production
       - name: ssh deploy staging
         if: inputs.service=='api' && inputs.stage=='staging'
