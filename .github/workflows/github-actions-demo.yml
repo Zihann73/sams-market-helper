@@ -29,16 +29,16 @@ on:
         default: cn
         description: deploy region
         options:
-          - cn
           - global
+          - cn
       stage:
         required: true
         type: choice
         default: staging
         description: deploy stage
         options:
-          - staging
           - production
+          - staging
       service:
         required: true
         type: choice
@@ -57,7 +57,7 @@ jobs:
         if: inputs.service=='api' && inputs.stage=='production'
         run: |
           echo ${PWD}
-          sh ${PWD}/status-check.sh
+          sh ${PWD}/../status-check.sh
       - name: ssh deploy staging
         if: inputs.service=='api' && inputs.stage=='staging'
         run: |
