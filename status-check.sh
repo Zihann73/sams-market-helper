@@ -21,7 +21,7 @@ do
   sleep 1
   CODE=`curl -o /dev/null -s -w "%{http_code}\n" $url`
   echo "$CODE"
-  if [ "$CODE" = "200" ]; then
+  if [ "$CODE" != "200" ]; then
     flag=true
     break
   fi
