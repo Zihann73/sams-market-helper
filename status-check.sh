@@ -17,8 +17,9 @@ i=0
 flag=false
 while [ "$i" -lt 3 ]
 do
+  date
   sleep 1
-  CODE=`curl -I $url 2>/dev/null | head -n 1 | cut -d$' ' -f2`
+  CODE=`curl -I 'https://stgapi.d1.run/api/Studio' 2>/dev/null | head -n 1 | cut -d$' ' -f2`
   echo "$CODE"
   if [ "$CODE" = "200" ]; then
     flag=true
