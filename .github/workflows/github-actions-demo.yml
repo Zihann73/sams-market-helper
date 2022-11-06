@@ -9,7 +9,7 @@ on:
       region:
         required: true
         type: string
-        default: cn
+        default: global
         description: deploy region
       stage:
         required: true
@@ -26,7 +26,7 @@ on:
       region:
         required: true
         type: choice
-        default: cn
+        default: global
         description: deploy region
         options:
           - global
@@ -34,7 +34,7 @@ on:
       stage:
         required: true
         type: choice
-        default: staging
+        default: production
         description: deploy stage
         options:
           - production
@@ -57,7 +57,7 @@ jobs:
         if: inputs.service=='api' && inputs.stage=='production'
         run: |
           echo ${PWD}
-          sh ${PWD}/../status-check.sh
+          sh status-check.sh
       - name: ssh deploy staging
         if: inputs.service=='api' && inputs.stage=='staging'
         run: |
