@@ -1,13 +1,13 @@
 #!/bin/bash
 
-if [ $1 == "cn" ] && [ $2 == "staging" ]
-  then url="https://stgapi.wooah.cn/api/Studio"
-elif [ $1 == "cn" ] && [ $2 == "production" ]
-  then url="https://api.wooah.cn/api/Studio"
-elif [ $1 == "global" ] && [ $2 == "staging" ]
-  then url="https://stgapi.d1.run/api/Studio"
-elif [ $1 == "global" ] && [ $2 == "production" ]
-  then url="https://api.d1.run/api/Studio"
+if [ "$1" == "cn" ] && [ "$2" == "staging" ]; then
+  url="https://stgapi.wooah.cn/api/Studio"
+elif [ "$1" == "cn" ] && [ "$2" == "production" ]; then
+  url="https://api.wooah.cn/api/Studio"
+elif [ "$1" == "global" ] && [ "$2" == "staging" ]; then
+  url="https://stgapi.d1.run/api/Studio"
+elif [ "$1" == "global" ] && [ "$2" == "production" ]; then
+  url="https://api.d1.run/api/Studio"
 else echo "status=DOWN" >> $GITHUB_ENV; exit 1
 fi
 
