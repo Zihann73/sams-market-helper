@@ -53,6 +53,8 @@ jobs:
     if: inputs.region=='global'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: ssh deploy production
         if: inputs.service=='api' && inputs.stage=='production'
         run: |
