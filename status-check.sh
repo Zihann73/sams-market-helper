@@ -21,12 +21,15 @@ do
   CODE=$(curl -I $url 2>/dev/null | head -n 1 | cut -d$' ' -f2)
   echo "$CODE"
   if [ "$CODE" = "200" ]; then
-    flag=true
+    flag="true"
     break
   fi
   i=$((i + 1))
 done
 if [ $flag = "false" ]; then
-  echo "status=DOWN" >> "$GITHUB_ENV"; else
+  echo "$flag"
+  echo "status=DOWN" >> "$GITHUB_ENV"
+else
+  echo "$flag"
   echo "status=UP" >> "$GITHUB_ENV"
 fi
