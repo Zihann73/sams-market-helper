@@ -26,7 +26,7 @@ do
   fi
   i=$((i + 1))
 done
-if [ $flag == "false" ]; then
+if [ $flag = "false" ]; then
   echo "status=DOWN" >> "$GITHUB_ENV"; else
   echo "status=UP" >> "$GITHUB_ENV"
 fi
