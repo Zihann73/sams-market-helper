@@ -8,7 +8,7 @@ elif [ "$1" = "global" ] && [ "$2" = "staging" ]; then
   url="https://stgapi.d1.run/api/Studio"
 elif [ "$1" = "global" ] && [ "$2" = "production" ]; then
   url="https://api.d1.run/api/Studio"
-else echo "status=DOWN" >> $GITHUB_ENV; exit 1
+else echo "status=DOWN" >> "$GITHUB_ENV"; exit 1
 fi
 
 echo "$url"
@@ -18,15 +18,15 @@ flag=false
 while [ "$i" -lt 3 ]
 do
   sleep 1
-  CODE=`curl -I $url 2>/dev/null | head -n 1 | cut -d$' ' -f2`
-  echo $CODE
-  if [ $CODE == "200" ]; then
+  CODE=$(curl -I $url 2>/dev/null | head -n 1 | cut -d$' ' -f2)
+  echo "$CODE"
+  if [ "$CODE" = "200" ]; then
     flag=true
     break
   fi
-  i=`expr $i + 1`
+  i=$((i + 1))
 done
 if [ $flag == "false" ]; then
-  echo "status=DOWN" >> $GITHUB_ENV; else
-  echo "status=UP" >> $GITHUB_ENV
+  echo "status=DOWN" >> "$GITHUB_ENV"; else
+  echo "status=UP" >> "$GITHUB_ENV"
 fi
