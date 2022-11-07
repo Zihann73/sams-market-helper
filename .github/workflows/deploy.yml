@@ -1,23 +1,95 @@
-name: Deploy all
-
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "**.md"
+  workflow_call:
+    inputs:
+      region:
+        required: true
+        type: string
+        default: global
+        description: deploy region
+      stage:
+        required: true
+        type: string
+        default: staging
+        description: deploy stage
+      service:
+        required: true
+        type: string
+        default: api
+        description: deploy service
+  workflow_dispatch:
+    inputs:
+      region:
+        required: true
+        type: choice
+        default: global
+        description: deploy region
+        options:
+          - global
+          - cn
+      stage:
+        required: true
+        type: choice
+        default: production
+        description: deploy stage
+        options:
+          - production
+          - staging
+      service:
+        required: true
+        type: choice
+        default: api
+        description: deploy service
+        options:
+          - api
+          - document
 
 jobs:
-  Deploy:
-    needs: Build
-    uses: ./.github/workflows/deploy.yml
-    strategy:
-      matrix:
-        region: [ cn, global ]
-        service: [ api, document ]
-        stage: [ staging, production ]
-    with:
-      region: ${{ matrix.region }}
-      stage: ${{ matrix.stage }}
-      service: ${{ matrix.service }}
-    secrets: inherit
+  deploy-global:
+    if: inputs.region=='global'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: ssh deploy production
+        if: inputs.service=='api' && inputs.stage=='production'
+        run: |
+          sh status-check.sh global production api
+      - name: ssh deploy staging
+        if: inputs.service=='api' && inputs.stage=='staging'
+        run: |
+          sh status-check.sh global staging api
+      - name: ssh deploy document
+        if: inputs.service=='document'
+        run: |
+          sh status-check.sh global production document
+      - name: exit check
+        if: env.status == 'DOWN'
+        run: |
+          echo "::error title=msg::'service unavailable'"
+          exit 1
+  deploy-cn:
+    if: inputs.region=='cn'
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh deploy production
+        if: inputs.service=='api' && inputs.stage=='production'
+        run: |
+          sh status-check.sh cn production api
+      - name: ssh deploy staging
+        if: inputs.service=='api' && inputs.stage=='staging'
+        run: |
+          sh status-check.sh cn staging api
+      - name: ssh deploy document
+        if: inputs.service=='document'
+        run: |
+          sh status-check.sh cn production document
+      - name: exit check
+        if: env.status == 'DOWN'
+        run: |
+          echo "::error title={title}::service unavailable"
+          exit 1
