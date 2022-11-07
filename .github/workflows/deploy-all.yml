@@ -9,7 +9,6 @@ on:
 
 jobs:
   Deploy:
-    needs: Build
     uses: ./.github/workflows/deploy.yml
     strategy:
       matrix:
