@@ -76,7 +76,7 @@ jobs:
       - name: ssh deploy production
         if: inputs.service=='api' && inputs.stage=='production'
         run: |
-          sh status-check.sh cn production api
+          sh ../../status-check.sh cn production api
       - name: ssh deploy staging
         if: inputs.service=='api' && inputs.stage=='staging'
         run: |

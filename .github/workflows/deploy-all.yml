@@ -15,6 +15,9 @@ jobs:
         region: [ cn, global ]
         service: [ api, document ]
         stage: [ staging, production ]
+        exclude:
+          - service: document
+            stage: staging
     with:
       region: ${{ matrix.region }}
       stage: ${{ matrix.stage }}
