@@ -1,0 +1,23 @@
+name: Deploy all
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  Deploy:
+    needs: Build
+    uses: ./.github/workflows/deploy.yml
+    strategy:
+      matrix:
+        region: [ cn, global ]
+        service: [ api, document ]
+        stage: [ staging, production ]
+    with:
+      region: ${{ matrix.region }}
+      stage: ${{ matrix.stage }}
+      service: ${{ matrix.service }}
+    secrets: inherit

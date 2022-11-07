@@ -63,10 +63,10 @@ jobs:
         if: inputs.service=='api' && inputs.stage=='staging'
         run: |
           sh status-check.sh global staging api
-      - name: show env
-        if: env.status == 'DOWN'
+      - name: ssh deploy document
+        if: inputs.service=='document'
         run: |
-          echo ${{ env.status }}
+          sh status-check.sh global production document
       - name: exit check
         if: env.status == 'DOWN'
         run: |
@@ -84,10 +84,10 @@ jobs:
         if: inputs.service=='api' && inputs.stage=='staging'
         run: |
           sh status-check.sh cn staging api
-      - name: show env
-        if: env.status == 'DOWN'
+      - name: ssh deploy document
+        if: inputs.service=='document'
         run: |
-          echo ${{ env.status }}
+          sh status-check.sh cn production document
       - name: exit check
         if: env.status == 'DOWN'
         run: |
