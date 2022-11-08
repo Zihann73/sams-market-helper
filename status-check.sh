@@ -17,9 +17,12 @@
 
 if [ "$1" = "global" ]; then
   region="d1.run"
-elif [ "$1" = "cn" ]; then
+elif [ "$1" = "cnn" ]; then
   region="wooah.cn"
-else echo "status=DOWN" >> "$GITHUB_ENV"; exit 1
+else
+  echo "status=DOWN" >> "$GITHUB_ENV"
+  echo "region env fail"
+  exit 1
 fi
 
 if [ "$2" = "staging" ]; then
