@@ -11,8 +11,8 @@ on:
 jobs:
   Deploy:
     uses: ./.github/workflows/deploy.yml
-    fail-fast: false
     strategy:
+      fail-fast: false
       matrix:
         region: [ cn, global ]
         service: [ api, document ]
