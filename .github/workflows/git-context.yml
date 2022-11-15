@@ -2,7 +2,7 @@ name: Git Context
 
 on:
   push:
-    branches: [main]
+    branches: [main, release-*]
 
 jobs:
   write-down:
