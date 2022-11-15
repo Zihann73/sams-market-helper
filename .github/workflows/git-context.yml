@@ -1,0 +1,9 @@
+name: Git Context
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  write-down:
+    run: echo ${GITHUB_REF##*/}
