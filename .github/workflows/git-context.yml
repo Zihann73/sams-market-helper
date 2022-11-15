@@ -9,5 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        BRANCH=${{GITHUB_REF##*/}}
-        echo BRANCH
+        BRANCH=${{ github.head_ref }}
+        echo ${BRANCH}
