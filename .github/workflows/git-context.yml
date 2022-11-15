@@ -9,5 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        BRANCH=${{ github.head_ref }}
-        echo ${BRANCH}
+        echo ${ github.head_ref }
