@@ -9,4 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        echo ${{GITHUB_REF##*/}}
+        cat > build/release.txt << EOF
+          RUN_URL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          ACTOR=${GITHUB_ACTOR}
+          GITHUB_RUN_ID=${GITHUB_RUN_ID}
+          DATE=$(date)
+        EOF
