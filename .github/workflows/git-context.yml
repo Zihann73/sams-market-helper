@@ -9,4 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        echo github.head_ref 
+        branch=${GITHUB_REF_TYPE}
+        echo branch
