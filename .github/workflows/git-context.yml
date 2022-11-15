@@ -10,10 +10,10 @@ jobs:
     steps:
       - name: write-down
         run: echo "abc"
-      - run: |
-        cat > build/release.txt << EOF
-        RUN_URL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
-        ACTOR=${GITHUB_ACTOR}
-        GITHUB_RUN_ID=${GITHUB_RUN_ID}
-        DATE=$(date)
-        EOF
+      # - run: |
+      #   cat > build/release.txt << EOF
+      #   RUN_URL=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+      #   ACTOR=${GITHUB_ACTOR}
+      #   GITHUB_RUN_ID=${GITHUB_RUN_ID}
+      #   DATE=$(date)
+      #   EOF
