@@ -1,6 +1,9 @@
 import api.Api;
 import cn.hutool.core.util.RandomUtil;
 
+/**
+ * Bootstrap
+ */
 public class Application {
     public static void main(String[] args) {
         int coreThreadSize = 2;
