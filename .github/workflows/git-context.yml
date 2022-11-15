@@ -8,4 +8,6 @@ jobs:
   write-down:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${GITHUB_REF##*/}
+      - run: |
+        BRANCH=${GITHUB_REF##*/}
+        echo BRANCH
