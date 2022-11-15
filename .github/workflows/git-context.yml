@@ -9,5 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        branch=${GITHUB_REF_TYPE}
-        echo branch
+        ${{GITHUB_REF##*/}}
