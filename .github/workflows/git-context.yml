@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        echo ${ github.head_ref }
+        echo github.head_ref 
